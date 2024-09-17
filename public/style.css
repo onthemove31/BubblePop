@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#game-container {
+    margin-top: 50px;
+}
+
+#bubble-area {
+    position: relative;
+    width: 80%;
+    height: 300px;
+    margin: 20px auto;
+    border: 2px solid #000;
+}
+
+.bubble {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 150, 255, 0.8);
+}
+
+#leaderboard {
+    margin-top: 50px;
+}
+
+#leaderboard-list {
+    list-style-type: none;
+    padding: 0;
+}
