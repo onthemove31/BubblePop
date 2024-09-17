@@ -47,7 +47,7 @@ app.post('/api/leaderboard', (req, res) => {
 // API to get leaderboard
 app.get('/api/leaderboard', (req, res) => {
     try {
-        const stmt = db.prepare('SELECT name, score FROM leaderboard ORDER BY score DESC LIMIT 10');
+        const stmt = db.prepare('SELECT name, score FROM leaderboard ORDER BY score DESC LIMIT 50');
         const rows = stmt.all();
         res.json(rows);
     } catch (err) {
