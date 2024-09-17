@@ -19,8 +19,15 @@ function startGame() {
 function createBubble(bubbleArea) {
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
+    
+    // Set random position
     bubble.style.top = Math.random() * (bubbleArea.offsetHeight - 50) + 'px';
     bubble.style.left = Math.random() * (bubbleArea.offsetWidth - 50) + 'px';
+    
+    // Set random color
+    const randomColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+    bubble.style.backgroundColor = randomColor;
+
     bubble.addEventListener('click', popBubble);
 
     bubbleArea.appendChild(bubble);
@@ -30,6 +37,7 @@ function createBubble(bubbleArea) {
     }, 3000);  // Bubble disappears after 3 seconds
 }
 
+
 function popBubble(event) {
     event.target.remove();
     score++;
@@ -38,15 +46,24 @@ function popBubble(event) {
 
 function endGame() {
     clearInterval(gameInterval);
-    saveScore(score);
-    alert(`Game over! Your score is ${score}`);
+    
+    // Ask the user for their name before saving the score
+    const playerName = prompt("Game over! Enter your name to save your score:");
+    
+    if (playerName) {
+        saveScore(score, playerName);
+        alert(`Game over! Your score is ${score}`);
+    } else {
+        alert('Score was not saved. Please enter your name next time!');
+    }
 }
 
-function saveScore(score) {
+
+function saveScore(score, name) {
     fetch('/api/leaderboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score: score })
+        body: JSON.stringify({ score: score, name: name })
     })
     .then(response => response.json())
     .then(data => {
@@ -62,7 +79,7 @@ function updateLeaderboard() {
         leaderboardList.innerHTML = '';
         data.forEach(item => {
             const li = document.createElement('li');
-            li.innerText = `Score: ${item.score}`;
+            li.innerText = `${item.name}: Score ${item.score}`;
             leaderboardList.appendChild(li);
         });
     });
