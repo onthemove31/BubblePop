@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const sqlite3 = require('sqlite3').verbose();
+const betterSqlite3 = require('better-sqlite3');
 const winston = require('winston');
 require('dotenv').config();
 
@@ -17,7 +17,7 @@ const logger = winston.createLogger({
     ]
 });
 
-const db = new sqlite3.Database(process.env.DATABASE_URL || './leaderboard.db');
+const db = new betterSqlite3(process.env.DATABASE_URL || './leaderboard.db');
 
 // Middleware for logging each request
 app.use((req, res, next) => {
